@@ -1,0 +1,49 @@
+<?php
+// $Id$
+
+function urlclass_help($section) {
+  switch ($section) {
+    case 'admin/help#urlclass':
+      $output = '<p>'. t('The URLClass module automatically adds CSS-classes to &lt;a&gt;-elements according to their target.') .'</p>';
+      $output .= t('<p>Use Input Formats to enable the URL filter</p>
+<ol>
+<li>Select an existing Input Format or add a new one</li>
+<li>Configure the Input Format</li>
+<li>Enable URL class filter and Save configuration</li>
+<li>Rearrange the weight of the URL filter depending on what filters exist in the format</li>
+</ol>');
+      $output .= t('<p>You can</p>
+      <ul><li>enable the urlfilter in an input format from <a href="%admin-filters">administer &gt;&gt; Input Filter</a>.</li></ul>', array('%admin-filters' => url('admin/filters')));
+      return $output;
+    case 'admin/modules#description':
+      return t('Automatically adds CSS-classes to URLs.');
+  }
+}
+
+function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
+  switch ($op) {
+    case 'list':
+      return array(0 => t('URLClass filter'));
+    
+    case 'description':
+      return t('Adds CSS-classes to URLs.');
+    
+    case 'process':
+      $text = preg_replace_callback('/<a(.+?)href=\"(.+?)(\")(.+?)?[^>]*>(.+?)<\/a>/i','urlclass_replace', $text);
+      return $text;
+    
+    default:
+      return $text;
+  }
+}
+
+function urlclass_replace($match) {
+  $url = parse_url($match[2]);
+  $domain = explode('.', $url['host']);
+  $domain = $domain[(count($domain)-2)];
+  
+  if (stristr($match[0], 'class')) $match[0] = str_replace('class="', 'class="'.check_plain($domain).' ', $match[0]);
+  else $match[0] = str_replace('">', '" class="'.check_plain($domain).'">', $match[0]);
+  
+  return $match[0];
+}
