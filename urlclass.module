@@ -20,10 +20,6 @@ function urlclass_help($section) {
   }
 }
 
-function urlclass_menu($may_cache) {
-  drupal_set_html_head('<link rel="stylesheet" type="text/css" href="'.base_path().drupal_get_path('module', 'urlclass').'/urlclass.css" />');
-}
-
 function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
   switch ($op) {
     case 'list':
@@ -46,8 +42,8 @@ function urlclass_replace($match) {
   $domain = explode('.', $url['host']);
   $domain = $domain[(count($domain)-2)];
   
-  if (stristr($match[0], 'class')) $match[0] = str_replace('class="', 'class="uc-'.check_plain($domain).' ', $match[0]);
-  else $match[0] = str_replace('">', '" class="uc-'.check_plain($domain).'">', $match[0]);
+  if (stristr($match[0], 'class')) $match[0] = str_replace('class="', 'class="'.check_plain($domain).' ', $match[0]);
+  else $match[0] = str_replace('">', '" class="'.check_plain($domain).'">', $match[0]);
   
   return $match[0];
 }
