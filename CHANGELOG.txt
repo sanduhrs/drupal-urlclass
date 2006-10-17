@@ -1,5 +1,9 @@
 CHANGELOG
 ---------
+urlclass.module - October, 16th 2006
+--------------------------------------
+- added some default icons.
+- added some default styles.
 
 urlclass.module - October, 16th 2006
 --------------------------------------
