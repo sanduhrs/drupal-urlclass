@@ -1,0 +1,19 @@
+CHANGELOG
+---------
+
+urlclass.module - March, 19th 2007
+--------------------------------------
+- Update for Drupal 5 compatibility
+- Removed most of the default icons
+
+urlclass.module - October, 16th 2006
+--------------------------------------
+- added some default icons.
+- added some default styles.
+
+urlclass.module - October, 16th 2006
+--------------------------------------
+- initial release.
+
+Comments and suggestions to
+Stefan Auditor <stefan.auditor@erdfisch.de>
