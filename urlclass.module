@@ -4,36 +4,28 @@
 function urlclass_help($section) {
   switch ($section) {
     case 'admin/help#urlclass':
-      $output = '<p>'. t('The URLClass module automatically adds CSS-classes to &lt;a&gt;-elements according to their target.') .'</p>';
-      $output .= t('<p>Use Input Formats to enable the URL filter</p>
-<ol>
-<li>Select an existing Input Format or add a new one</li>
-<li>Configure the Input Format</li>
-<li>Enable URL class filter and Save configuration</li>
-<li>Rearrange the weight of the URL filter depending on what filters exist in the format</li>
-</ol>');
-      $output .= t('<p>You can</p>
-      <ul><li>enable the urlfilter in an input format from <a href="%admin-filters">administer &gt;&gt; Input Filter</a>.</li></ul>', array('%admin-filters' => url('admin/filters')));
+      $output = '<p>'. t('The URLClass module automatically adds a CSS class to &lt;a&gt;-elements reflecting their target.') .'</p>';
+      $output .= '<p>'. t('Use Input Formats to enable the URL filter') .'</p>';
+      $output .= t('<ol><li>Select an existing Input Format or add a new one</li><li>Configure the Input Format</li><li>Enable URL class filter and Save configuration</li><li>Rearrange the weight of the URL filter depending on what filters exist in the format</li></ol>');
+      $output .= '<p>'. t('You can enable the urlfilter for an input format from <a href="%admin-filters">Administer &gt;&gt; Site Configuration &gt;&gt; Input Filter</a>.', array('%admin-filters' => url('admin/settings/filters'))) .'</p>';
       return $output;
-    case 'admin/modules#description':
-      return t('Automatically adds CSS-classes to URLs.');
   }
 }
 
 function urlclass_menu($may_cache) {
-  drupal_set_html_head('<link rel="stylesheet" type="text/css" href="'.base_path().drupal_get_path('module', 'urlclass').'/urlclass.css" />');
+  drupal_add_css(drupal_get_path('module', 'urlclass').'/urlclass.css', 'module');
 }
 
 function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
   switch ($op) {
     case 'list':
-      return array(0 => t('URLClass filter'));
+      return array(0 => t('URL Class filter'));
     
     case 'description':
-      return t('Adds CSS-classes to URLs.');
+      return t('Adds a CSS class to a URL.');
     
     case 'process':
-      $text = preg_replace_callback('/<a(.+?)href=\"(.+?)(\")(.+?)?[^>]*>(.+?)<\/a>/i','urlclass_replace', $text);
+      $text = preg_replace_callback('/<a.+?href=\"(http:\/\/.+?)\"[^>]*>.+?<\/a>/i','urlclass_replace', $text);
       return $text;
     
     default:
@@ -42,7 +34,7 @@ function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
 }
 
 function urlclass_replace($match) {
-  $url = parse_url($match[2]);
+  $url = parse_url($match[1]);
   $domain = explode('.', $url['host']);
   $domain = $domain[(count($domain)-2)];
   
