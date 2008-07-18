@@ -45,7 +45,7 @@ function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
       return t('Adds a CSS class to a URL.');
     
     case 'process':
-      $text = preg_replace_callback('/<a.+?href=\"(http:\/\/.+?)\"[^>]*>.+?<\/a>/i', 'urlclass_replace', $text);
+      $text = preg_replace_callback('/<a.+?href=\"(http:\/\/.+?)\"[^>]*>.+?<\/a>/i', '_urlclass_replace', $text);
       return $text;
     
     default:
@@ -56,7 +56,7 @@ function urlclass_filter($op, $delta = 0, $format = -1, $text = '') {
 /**
  * Callback function for the filter
  */
-function urlclass_replace($match) {
+function _urlclass_replace($match) {
   $url = parse_url($match[1]);
   $domain = explode('.', $url['host']);
   $domain = $domain[(count($domain)-2)];
