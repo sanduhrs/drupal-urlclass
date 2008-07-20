@@ -1,4 +1,4 @@
-; $Id $
+; $Id$
 name = "URL Class"
 description = "Adds a CSS class to all <a>-Elements according to their target."
 ; dependencies = 
