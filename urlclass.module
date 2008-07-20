@@ -9,14 +9,14 @@
  *
  * @author
  * Stefan Auditor <stefan.auditor@erdfisch.de>
- * for erdfisch :: internetlösungen http://erdfisch.de
+ * for erdfisch http://erdfisch.de
  */
 
 /**
  * Implementation of hook_help().
  */
-function urlclass_help($section) {
-  switch ($section) {
+function urlclass_help($path, $arg) {
+  switch ($path) {
     case 'admin/help#urlclass':
       $output = '<p>'. t('The URLClass module automatically adds a CSS class to &lt;a&gt;-elements reflecting their target.') .'</p>';
       $output .= '<p>'. t('Use Input Formats to enable the URL filter') .'</p>';
@@ -27,9 +27,9 @@ function urlclass_help($section) {
 }
 
 /**
- * Implementation of hook_menu().
+ * Implementation of hook_init().
  */
-function urlclass_menu($may_cache) {
+function urlclass_init() {
   drupal_add_css(drupal_get_path('module', 'urlclass') .'/urlclass.css', 'module');
 }
 
