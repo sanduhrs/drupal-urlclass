@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 function urlclass_help($section) {
   switch ($section) {
